@@ -2532,6 +2532,21 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
           }
         );
         break;
+        case "3dsound":
+        case "sound3d": //RIZ
+            if (!isQuotedAudio) return fakegroup('Reply audionya!');
+            fakegroup(mess.wait);
+            encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo;
+            media = await client.downloadAndSaveMediaMessage(encmedia);
+            ran = getRandom('.mp3');
+            exec(`ffmpeg -i ${media} -af apulsator=hz=0.125 ${ran}`, (err) => {
+            fs.unlinkSync(media);
+            if (err) return fakegroup(`Err: ${err}`);
+            buffer453 = fs.readFileSync(ran);
+            client.sendMessage(from, buffer453, audio, { mimetype: 'audio/mp4', quoted: mek })
+            fs.unlinkSync(ran);
+            })
+            break
       case "reverse":
         if (!isQuotedVideo) return fakegroup("Reply videonya!");
         encmedia = JSON.parse(JSON.stringify(mek).replace("quotedM", "m"))
